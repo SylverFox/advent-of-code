@@ -2,6 +2,7 @@ import moment from 'moment'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import './common.js'
 
 const DIRNAME = path.dirname(fileURLToPath(import.meta.url))
 

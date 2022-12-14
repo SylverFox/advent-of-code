@@ -4,7 +4,6 @@ export default function (input) {
     for (let i = 0; i < input.length; i++) {
         let newInput = []
         for (let j = 1; j < input[i].length; j++) {
-            // console.log(i, j, newInput)
             const x1 = input[i][j - 1][0], x2 = input[i][j][0]
             const y1 = input[i][j - 1][1], y2 = input[i][j][1]
             for (let x = x1; x !== x2; x1 < x2 ? x++ : x--) {
@@ -31,22 +30,6 @@ export default function (input) {
     for (let y = yMin; y <= yMax; y++) {
         if (!map[y]) map[y] = []
     }
-
-    const printMap = (map) => {
-        console.log('\x1b[3J')
-        map = JSON.parse(JSON.stringify(map))
-        for (let y = yMin; y <= yMax; y++) {
-            for (let x = xMin; x <= xMax; x++) {
-                if (!map[y]) map[y] = []
-                if (!map[y][x]) map[y][x] = '.'
-            }
-        }
-        map[0][500] = '+'
-        map.slice(yMin, yMax + 1).forEach(row => console.log(row.slice(xMin, xMax + 1).join('')))
-        console.log()
-    }
-
-    // printMap(map)
 
     let sand = 0
     main: while (true) {
@@ -96,10 +79,6 @@ export default function (input) {
             } else {
                 map[y][x] = 'o'
                 sand++
-                // if (sand % 100 === 0) {
-                //     console.log(x, y, sand)
-                //     printMap(map)
-                // }
                 break
             }
         }

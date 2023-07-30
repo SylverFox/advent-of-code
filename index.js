@@ -2,6 +2,7 @@ import moment from 'moment'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import './common.js'
 
 const DIRNAME = path.dirname(fileURLToPath(import.meta.url))
 
@@ -33,4 +34,7 @@ const [year, puzzle] = parseInput()
 const input = getInputFile(year, puzzle)
 
 console.log(`Running puzzle ${year}/${puzzle}`)
-import(`${DIRNAME}/${year}/${puzzle}.js`).then(puzzle => puzzle.default(input))
+const time = Date.now()
+import(`${DIRNAME}/${year}/${puzzle}.js`)
+    .then(puzzle => puzzle.default(input))
+    .then(() => console.log('Solution took', Date.now() - time, 'ms'))

@@ -1,4 +1,7 @@
 export default function (input) {
+    const Y_TARGET = 2000000
+    const MAX_COORDINATE = 4000000
+
     const getCoveredRanges = target => {
         let coveredRanges = []
         for (let i of input) {
@@ -37,44 +40,46 @@ export default function (input) {
         return outputRanges
     }
 
-    const Y_TARGET = 2000000
-    // const Y_TARGET = 10
     let output = getCoveredRanges(Y_TARGET).map(r => r.xMax - r.xMin).reduce((a, b) => a + b)
     console.log('Part 1:', output)
 
-    // const MAX_COORDINATE = 20
-    const MAX_COORDINATE = 4000000
-    // main: for (let y = 0; y <= MAX_COORDINATE; y++) {
-    //     const ranges = getCoveredRanges(y)
-    //     for (let x = 0; x <= MAX_COORDINATE; x++) {
-    //         const canFit = !ranges.some(r => x >= r.xMin && x <= r.xMax)
-    //         if (canFit) {
-    //             console.log('Part 2:', x * 4000000 + y)
-    //             break main
-    //         }
-    //     }
-        
-    // }
-
     let parsed = input
         .map(i => i.match(/x=([-\d]+), y=([-\d]+).*x=([-\d]+), y=([-\d]+)/).slice(1).map(Number))
-        .map(i => ({xS: i[0], yS: i[1], xB: i[2], yB: [3], dist: Math.abs(i[3] - i[1]) + Math.abs(i[2] - i[0])}))
+        .map(i => ({xS: i[0]/1, yS: i[1]/1, xB: i[2]/1, yB: [3]/1, r: Math.abs(i[3] - i[1]) + Math.abs(i[2] - i[0])}))
 
-    main: for (let y = 0; y <= MAX_COORDINATE; y++) {
-        console.log(y)
-        for (let x = 0; x <= MAX_COORDINATE; x++) {
-            let hit = false;
-            for (let p of parsed) {
-                const distC = Math.abs(y - p.yS) + Math.abs(x - p.xS)
-                if (distC <= p.dist) {
-                    hit = true
-                    break
-                }
+    main: for (let y = 0; y < MAX_COORDINATE; y++) {
+        let ranges = []
+        for (let p of parsed) {
+            let dY = Math.abs(p.yS - y)
+            if (dY > p.r) continue // Outside of range
+
+            let xmin = Math.max(p.xS - (p.r - dY), 0)
+            let xmax = Math.min(p.xS + (p.r - dY), MAX_COORDINATE)
+            ranges.push({xmin, xmax})
+        }
+
+        let rangeMin = 0, rangeMax = MAX_COORDINATE
+        while (ranges.length) {
+            const r = ranges.findIndex(r => r.xmin <= rangeMin || r.xmax >= rangeMax)
+            if (ranges[r].xmin <= rangeMin) {
+                rangeMin = Math.max(rangeMin, ranges[r].xmax + 1)
             }
-            if (!hit) {
-                console.log('Part 2:', x * 4000000 + y)
-                break main
+            if (ranges[r].xmax >= rangeMax) {
+                rangeMax = Math.min(rangeMax, ranges[r].xmin - 1)
             }
+
+            if (rangeMin > rangeMax) {
+                // Complete overlap, continue next row
+                continue main
+            }
+
+            ranges.splice(r, 1)[0]
+        }
+
+        if (rangeMin === rangeMax) {
+            // All ranges applied and one position left, this is the result
+            console.log('part 2:', rangeMin * 4000000 + y)
+            return
         }
     }
 }

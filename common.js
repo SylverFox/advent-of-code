@@ -8,21 +8,21 @@ Object.defineProperty(Array.prototype, "tap", {
 
 Object.defineProperty(Array.prototype, "clone", {
     enumerable: false,
-    value: function(f) {
+    value: function() {
         return JSON.parse(JSON.stringify(this))
     }
 })
 
 Object.defineProperty(Array.prototype, "sum", {
     enumerable: false,
-    value: function(f) {
+    value: function() {
         return this.reduce((a,v) => a + v, 0)
     }
 })
 
 Object.defineProperty(Array.prototype, "product", {
     enumerable: false,
-    value: function(f) {
+    value: function() {
         return this.reduce((a,v) => a * v, 0)
     }
 })

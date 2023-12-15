@@ -28,7 +28,7 @@ function parseInput() {
 
 function getInputFile(year, puzzle) {
     const file = path.resolve(DIRNAME, year.toString(), puzzle + '.txt')
-    return fs.existsSync(file) ? fs.readFileSync(file).toString().split(os.platform() === 'win32' ? '\r\n' : '\n') : ''
+    return fs.existsSync(file) ? fs.readFileSync(file).toString().split(os.platform() === 'win32' ? '\r\n' : '\n') : []
 }
 
 const [year, puzzle] = parseInput()

@@ -23,7 +23,7 @@ Object.defineProperty(Array.prototype, "sum", {
 Object.defineProperty(Array.prototype, "product", {
     enumerable: false,
     value: function() {
-        return this.reduce((a,v) => a * v, 0)
+        return this.reduce((a,v) => a * v, 1)
     }
 })
 

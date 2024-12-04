@@ -41,5 +41,12 @@ Object.defineProperty(Array.prototype, 'transpose2D', {
   },
 })
 
+Object.defineProperty(String.prototype, 'reverse', {
+  enumerable: false,
+  value: function () {
+    return this.split('').reverse().join('')
+  },
+})
+
 export const gcd = (a, b) => (!b ? a : gcd(b, a % b))
 export const lcm = (a, b) => (a * b) / gcd(a, b)

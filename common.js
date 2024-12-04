@@ -27,5 +27,19 @@ Object.defineProperty(Array.prototype, 'product', {
   },
 })
 
+Object.defineProperty(Array.prototype, 'first', {
+  enumerable: false,
+  value: function () {
+    return this.length ? this[0] : null
+  },
+})
+
+Object.defineProperty(Array.prototype, 'transpose2D', {
+  enumerable: false,
+  value: function () {
+    return this[0].map((_, i) => this.map((r) => r[i]))
+  },
+})
+
 export const gcd = (a, b) => (!b ? a : gcd(b, a % b))
 export const lcm = (a, b) => (a * b) / gcd(a, b)

@@ -12,5 +12,11 @@
   "type": "module",
   "dependencies": {
     "moment": "^2.29.4"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
   }
 }

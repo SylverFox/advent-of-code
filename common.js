@@ -34,6 +34,13 @@ Object.defineProperty(Array.prototype, 'first', {
   },
 })
 
+Object.defineProperty(Array.prototype, 'last', {
+  enumerable: false,
+  value: function () {
+    return this.length ? this[this.length - 1] : null
+  },
+})
+
 Object.defineProperty(Array.prototype, 'transpose2D', {
   enumerable: false,
   value: function () {
